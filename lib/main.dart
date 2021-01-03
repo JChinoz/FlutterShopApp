@@ -1,24 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shopapp2/providers/auth.dart';
-import 'package:shopapp2/providers/cart.dart';
-import 'package:shopapp2/providers/orders.dart';
-import 'package:shopapp2/providers/products.dart';
-import 'package:shopapp2/screens/cart_screen.dart';
-import 'package:shopapp2/screens/edit_product_screen.dart';
-import 'package:shopapp2/screens/orders_screen.dart';
 
-import 'package:shopapp2/screens/product_detail_screen.dart';
-import 'package:shopapp2/screens/product_overview_screen.dart';
-import 'package:shopapp2/screens/user_products_screen.dart';
-import 'package:shopapp2/screens/auth_screen.dart';
+import './screens/splash_screen.dart';
+import './screens/cart_screen.dart';
+import './screens/products_overview_screen.dart';
+import './screens/product_detail_screen.dart';
+import './providers/products.dart';
+import './providers/cart.dart';
+import './providers/orders.dart';
+import './providers/auth.dart';
+import './screens/orders_screen.dart';
+import './screens/user_products_screen.dart';
+import './screens/edit_product_screen.dart';
+import './screens/auth_screen.dart';
 
-void main() {
-  runApp(MyApp());
-}
+void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -26,25 +24,44 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider.value(
           value: Auth(),
         ),
-        ChangeNotifierProvider(
-          create: (ctx) => Products(),
+        ChangeNotifierProxyProvider<Auth, Products>(
+          create: null,
+          update: (ctx, auth, previousProducts) => Products(
+            auth.token,
+            auth.userId,
+            previousProducts == null ? [] : previousProducts.items,
+          ),
         ),
-        ChangeNotifierProvider(
-          create: (ctx) => Cart(),
+        ChangeNotifierProvider.value(
+          value: Cart(),
         ),
-        ChangeNotifierProvider(
-          create: (ctx) => Orders(),
+        ChangeNotifierProxyProvider<Auth, Orders>(
+          create: null,
+          update: (ctx, auth, previousOrders) => Orders(
+            auth.token,
+            auth.userId,
+            previousOrders == null ? [] : previousOrders.orders,
+          ),
         ),
       ],
       child: Consumer<Auth>(
         builder: (ctx, auth, _) => MaterialApp(
-          title: 'Flutter Demo',
+          title: 'MyShop',
           theme: ThemeData(
             primarySwatch: Colors.purple,
             accentColor: Colors.deepOrange,
             fontFamily: 'Lato',
           ),
-          home: auth.isAuth ? ProductsOverviewScreen() : AuthScreen(),
+          home: auth.isAuth
+              ? ProductsOverviewScreen()
+              : FutureBuilder(
+                  future: auth.tryAutoLogin(),
+                  builder: (ctx, authResultSnapshot) =>
+                      authResultSnapshot.connectionState ==
+                              ConnectionState.waiting
+                          ? SplashScreen()
+                          : AuthScreen(),
+                ),
           routes: {
             ProductDetailScreen.routeName: (ctx) => ProductDetailScreen(),
             CartScreen.routeName: (ctx) => CartScreen(),
@@ -53,20 +70,6 @@ class MyApp extends StatelessWidget {
             EditProductScreen.routeName: (ctx) => EditProductScreen(),
           },
         ),
-      ),
-    );
-  }
-}
-
-class MyHomePage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('MyShop'),
-      ),
-      body: Center(
-        child: Text('Let\'s build a shop!'),
       ),
     );
   }

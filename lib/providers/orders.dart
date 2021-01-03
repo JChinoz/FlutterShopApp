@@ -1,7 +1,9 @@
-import 'package:flutter/foundation.dart';
-import 'package:shopapp2/providers/cart.dart';
-import 'package:http/http.dart' as http;
 import 'dart:convert';
+
+import 'package:flutter/foundation.dart';
+import 'package:http/http.dart' as http;
+
+import './cart.dart';
 
 class OrderItem {
   final String id;
@@ -19,12 +21,18 @@ class OrderItem {
 
 class Orders with ChangeNotifier {
   List<OrderItem> _orders = [];
+  final String authToken;
+  final String userId;
+
+  Orders(this.authToken, this.userId, this._orders);
+
   List<OrderItem> get orders {
     return [..._orders];
   }
 
   Future<void> fetchAndSetOrders() async {
-    const url = 'https://flutter-81d8c.firebaseio.com/orders.json';
+    final url =
+        'https://flutter-81d8c.firebaseio.com/orders/$userId.json?auth=$authToken';
     final response = await http.get(url);
     final List<OrderItem> loadedOrders = [];
     final extractedData = json.decode(response.body) as Map<String, dynamic>;
@@ -40,10 +48,11 @@ class Orders with ChangeNotifier {
           products: (orderData['products'] as List<dynamic>)
               .map(
                 (item) => CartItem(
-                    id: item['id'],
-                    title: item['title'],
-                    quantity: item['quantity'],
-                    price: item['price']),
+                  id: item['id'],
+                  price: item['price'],
+                  quantity: item['quantity'],
+                  title: item['title'],
+                ),
               )
               .toList(),
         ),
@@ -54,21 +63,22 @@ class Orders with ChangeNotifier {
   }
 
   Future<void> addOrder(List<CartItem> cartProducts, double total) async {
-    const url = 'https://flutter-81d8c.firebaseio.com/orders.json';
-    final timeStamp = DateTime.now();
+    final url =
+        'https://flutter-81d8c.firebaseio.com/orders/$userId.json?auth=$authToken';
+    final timestamp = DateTime.now();
     final response = await http.post(
       url,
       body: json.encode({
         'amount': total,
-        'dateTime': timeStamp.toIso8601String(),
+        'dateTime': timestamp.toIso8601String(),
         'products': cartProducts
             .map((cp) => {
                   'id': cp.id,
                   'title': cp.title,
                   'quantity': cp.quantity,
-                  'price': cp.price
+                  'price': cp.price,
                 })
-            .toList()
+            .toList(),
       }),
     );
     _orders.insert(
@@ -76,8 +86,8 @@ class Orders with ChangeNotifier {
       OrderItem(
         id: json.decode(response.body)['name'],
         amount: total,
+        dateTime: timestamp,
         products: cartProducts,
-        dateTime: timeStamp,
       ),
     );
     notifyListeners();

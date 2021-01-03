@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shopapp2/providers/products.dart';
-import 'package:shopapp2/screens/edit_product_screen.dart';
+
+import '../screens/edit_product_screen.dart';
+import '../providers/products.dart';
 
 class UserProductItem extends StatelessWidget {
   final String id;
@@ -21,7 +22,7 @@ class UserProductItem extends StatelessWidget {
       trailing: Container(
         width: 100,
         child: Row(
-          children: [
+          children: <Widget>[
             IconButton(
               icon: Icon(Icons.edit),
               onPressed: () {
@@ -39,10 +40,7 @@ class UserProductItem extends StatelessWidget {
                 } catch (error) {
                   scaffold.showSnackBar(
                     SnackBar(
-                      content: Text(
-                        'Deleting failed',
-                        textAlign: TextAlign.center,
-                      ),
+                      content: Text('Deleting failed!', textAlign: TextAlign.center,),
                     ),
                   );
                 }
