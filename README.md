@@ -1,4 +1,4 @@
-# shopapp2
+# FlutterShopApp
 
 Learning to build an E-Commerce Flutter application from scratch following Maximilian Schwarzmüller's (Academind) tutorial on Udemy **Flutter & Dart - The Complete Guide [2020 Edition]**.
 
