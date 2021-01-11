@@ -1,6 +1,6 @@
 # shopapp2
 
-Learning to build an E-Commerce Flutter application from scratch following Maximilian Schwarzmüller's (Academind) tutorial on Udemy "**Flutter & Dart - The Complete Guide [2020 Edition]**".
+Learning to build an E-Commerce Flutter application from scratch following Maximilian Schwarzmüller's (Academind) tutorial on Udemy **Flutter & Dart - The Complete Guide [2020 Edition]**.
 
 Had to redo from scratch as I forgot most of the core concepts after 2 months not working on it.
 
