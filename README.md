@@ -9,6 +9,7 @@ Had to redo from scratch as I forgot most of the core concepts after 2 months no
 - Running an Android emulation is a VERY RESOURCE HUNGRY AND TEDIOUS PROCESS. The slowness of it during operation makes me avoid using it in conjunction with Dart DevTools.
 - Compared to Web Dev. You'd have to be a lot more meticulous as people generally have less patience on an app compared to web apps (eg: Waiting on promises) and app relies a lot more on UI elements to guide user behaviour.
 - Its been often quoted to be a good framework to quickly prototype an app without much hassle. I have no idea as I've never extensively coded on native language for apps. Probably will use it for hackathons if we're going with an app idea. But then again, how many developers would know how to code on Flutter?
+- Tons of classes and enums makes building apps from scratch easy....if you know what you're looking for. My guess is that the more time I spend on actually using Flutter and delving into the docs in real world projects, the faster I get to know what goes where its needed. Much like how some common CSS attributes and Bootstrap classes are now second nature to me from just muscle memory.
 
 **Total Hours Required : 41.5**
 
@@ -24,7 +25,7 @@ Had to redo from scratch as I forgot most of the core concepts after 2 months no
 - ✅ Section 9 : Working with User Input & Forms [SHOP APP]
 - ✅ Section 10 : Sending Http Requests [SHOP APP]
 - ✅ Section 11 : Adding User Authentication [SHOP APP]
-- Section 12 : Adding Animations [SHOP APP]
+- ✅ Section 12 : Adding Animations [SHOP APP]
 - Section 13 : Using Native Device Features (Camera, Maps, Location, ...) [GREAT PLACES APP]
 - Section 14 : Firebase, Image Upload, Push Notifications - Building a Chat App
 - Section 15 : Running Native Swift, ObjectiveC, Java or Kotlin Code
@@ -68,3 +69,14 @@ Had to redo from scratch as I forgot most of the core concepts after 2 months no
 - Optimistic Updating
 - Firebase Authentication using Tokens
 - ChangeNotifierProvider & ChangeNotifierProxyProvider
+
+### Advanced Animation concepts
+- Manual animations
+- AnimatedBuilder
+- AnimatedContainer
+- AnimatedController, Animated<Size>, Animated<Offset>, Tween<Size>, Tween<Offset>
+- CurvedAnimation
+- FadeInImage
+- Hero transitions
+- CustomScrollView, SliverAppBar, SliverList, SliverChildListDelegate
+- CustomRoute, MaterialPageRoute, buildTransitions, PageTransitionsBuilder
