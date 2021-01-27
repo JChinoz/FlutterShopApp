@@ -80,3 +80,8 @@ Had to redo from scratch as I forgot most of the core concepts after 2 months no
 - Hero transitions
 - CustomScrollView, SliverAppBar, SliverList, SliverChildListDelegate
 - CustomRoute, MaterialPageRoute, buildTransitions, PageTransitionsBuilder
+
+### Using Device Features
+- import dart:io
+- File datatype
+- Image.file
