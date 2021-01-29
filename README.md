@@ -85,3 +85,6 @@ Had to redo from scratch as I forgot most of the core concepts after 2 months no
 - import dart:io
 - File datatype
 - Image.file
+- ImagePicker package. ImagePicker.getImage, ImageSource
+- Added Path and PathProvider packages
+- sqflite, getDatabasesPath, openDatabase
